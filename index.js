@@ -235,7 +235,7 @@ const addEmployee = () => {
     }
 
     const viewRole = () => {
-        connection.query("SELECT * FROM roles", (err, res) => {
+        connection.query("SELECT * FROM roles INNER JOIN departments ON roles.department_id = departments.id", (err, res) => {
             if (err) console.log(err);
             console.table(res);
             chooseAction();
@@ -243,7 +243,7 @@ const addEmployee = () => {
     }
 
     const viewEmployee = () => {
-        connection.query("SELECT * FROM employees", (err, res) => {
+        connection.query("SELECT * FROM roles INNER JOIN departments ON roles.department_id = departments.id INNER JOIN employees ON roles.id", (err, res) => {
             if (err) console.log(err);
             console.table(res);
             chooseAction();
