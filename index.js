@@ -241,9 +241,9 @@ const addEmployee = () => {
             chooseAction();
         })
     }
-
+    
     const viewEmployee = () => {
-        connection.query("SELECT * FROM roles INNER JOIN departments ON roles.department_id = departments.id INNER JOIN employees ON roles.id", (err, res) => {
+        connection.query("SELECT employees.first_name, employees.last_name, roles.title, roles.salary, departments.name AS department, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles ON employees.role_id=roles.id LEFT JOIN departments ON roles.department_id=departments.id LEFT JOIN employees manager ON manager.id=employees.manager_id", (err, res) => {
             if (err) console.log(err);
             console.table(res);
             chooseAction();
@@ -255,17 +255,5 @@ const addEmployee = () => {
         connection.end()
         console.log("You have finished.")
     };
-    // Build a command-line application that at a minimum allows the user to:
-
-    //   * Update employee roles
-
-    // Bonus points if you're able to:
-
-    //   * Update employee managers
-
-    //   * View employees by manager
-
-    //   * Delete departments, roles, and employees
-
-    //   * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
+    
     init();
